@@ -2,11 +2,11 @@ pipeline {
     agent any
 
     environment {
-        DOCKERHUB_USER = "your-dockerhub-username"
+        DOCKERHUB_USER = "robbenselvaone"
         DOCKERHUB_CREDS = "dockerhub-creds"     // Jenkins credential ID
         EC2_KEY = "ec2-ssh-key"                 // Jenkins SSH key credential ID
-        EC2_HOST = "your-ec2-public-dns"
-        EC2_USER = "ec2-user"
+        EC2_HOST = "ec2-13-201-130-150.ap-south-1.compute.amazonaws.com"
+        EC2_USER = "ubuntu"
     }
 
     stages {
@@ -19,9 +19,9 @@ pipeline {
                     }
 
                     if (env.BRANCH_NAME == "dev")
-                        env.REPO = "${DOCKERHUB_USER}/app-dev"
+                        env.REPO = "${DOCKERHUB_USER}/project2-dev"
                     else
-                        env.REPO = "${DOCKERHUB_USER}/app-prod"
+                        env.REPO = "${DOCKERHUB_USER}/project2-production1"
 
                     env.TAG = sh(script: "git rev-parse --short HEAD", returnStdout: true).trim()
                     env.IMAGE = "${env.REPO}:${env.TAG}"
@@ -61,3 +61,4 @@ pipeline {
         }
     }
 }
+
